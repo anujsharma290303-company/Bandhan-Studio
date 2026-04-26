@@ -16,25 +16,23 @@ import helmet from 'helmet';
 import dotenv from 'dotenv';
 import rateLimit from 'express-rate-limit';
 import { connectDB } from './config/database';
-import authRoutes from './modules/auth/auth.routes';
 
+import authRoutes from './modules/auth/auth.routes';
+import clientRoutes from './modules/clients/client.routes';
 
 // Load environment variables from .env file (must be called before using process.env)
 dotenv.config();
 
 const app = express();
 
-
 // Confirm app initialization (for debugging)
 console.log('Express app initialized');
-
 
 // Log every request (for debugging and monitoring)
 app.use((req, res, next) => {
   console.log('Request:', req.method, req.url);
   next();
 });
-
 
 // Add security headers
 app.use(helmet());
@@ -52,26 +50,25 @@ app.use(rateLimit({ windowMs: 15 * 60 * 1000, max: 100 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-
-// Register authentication routes (all /api/v1/auth/* endpoints)
+// Register API routes
 app.use('/api/v1/auth', authRoutes);
-
+app.use('/api/v1/clients', clientRoutes);
 
 // Health check endpoint (for uptime monitoring)
 app.get('/health', (req, res) => {
   res.json({ success: true, message: 'Bandan Studio API is running' });
 });
 
+// Test route for debugging
+app.get('/test', (req, res) => res.json({ ok: true }));
 
-// 404 handler for unknown routes (should be last route)
+// 404 handler for unknown routes (must be last)
 app.use((req, res) => {
   res.status(404).json({ success: false, message: 'Route not found' });
 });
 
 const PORT = process.env.PORT || 3000;
 
-// Start server after connecting to database
-// Call startServer() from your entry point (e.g., index.ts)
 const startServer = async () => {
   await connectDB();
   app.listen(PORT, () => {
