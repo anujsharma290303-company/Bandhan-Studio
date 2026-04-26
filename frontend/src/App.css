@@ -1,3 +1,9 @@
+/**
+ * App Styles - Component Styling
+ * TODO: Replace with Tailwind utilities and component library
+ */
+
+/** Counter Button - Demo interactive element */
 .counter {
   font-size: 16px;
   padding: 5px 10px;
@@ -17,9 +23,11 @@
   }
 }
 
+/** Hero Section - Logo container with 3D transforms */
 .hero {
   position: relative;
 
+  /* Align all logo elements horizontally */
   .base,
   .framework,
   .vite {
@@ -27,17 +35,20 @@
     margin: 0 auto;
   }
 
+  /* Base/background logo */
   .base {
     width: 170px;
     position: relative;
     z-index: 0;
   }
 
+  /* Floating framework logos */
   .framework,
   .vite {
     position: absolute;
   }
 
+  /* React logo - rotated 3D perspective */
   .framework {
     z-index: 1;
     top: 34px;
@@ -46,6 +57,7 @@
       scale(1.4);
   }
 
+  /* Vite logo - rotated 3D perspective */
   .vite {
     z-index: 0;
     top: 107px;
@@ -56,6 +68,7 @@
   }
 }
 
+/** Center Content - Main hero area with vertical centering */
 #center {
   display: flex;
   flex-direction: column;
@@ -70,6 +83,7 @@
   }
 }
 
+/** Next Steps Section - Two-column layout with links */
 #next-steps {
   display: flex;
   border-top: 1px solid var(--border);
@@ -95,6 +109,7 @@
   }
 }
 
+/** Docs Column - Left column with right border */
 #docs {
   border-right: 1px solid var(--border);
 
@@ -104,6 +119,7 @@
   }
 }
 
+/** Link List - Flexbox layout for social/doc links */
 #next-steps ul {
   list-style: none;
   padding: 0;
@@ -115,6 +131,7 @@
     height: 18px;
   }
 
+  /* Link styling with hover effect */
   a {
     color: var(--text-h);
     font-size: 16px;
@@ -153,6 +170,7 @@
   }
 }
 
+/** Spacer - Empty space with top border */
 #spacer {
   height: 88px;
   border-top: 1px solid var(--border);
@@ -161,10 +179,12 @@
   }
 }
 
+/** Ticks - Decorative corner marks using pseudo-elements */
 .ticks {
   position: relative;
   width: 100%;
 
+  /* Create corner marks with borders */
   &::before,
   &::after {
     content: '';
@@ -173,10 +193,13 @@
     border: 5px solid transparent;
   }
 
+  /* Left corner mark */
   &::before {
     left: 0;
     border-left-color: var(--border);
   }
+  
+  /* Right corner mark */
   &::after {
     right: 0;
     border-right-color: var(--border);

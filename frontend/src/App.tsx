@@ -1,3 +1,8 @@
+/**
+ * Main App component for Bandan Studio frontend.
+ * Currently a demo with a counter and documentation links.
+ * Replace with actual routes and pages for production.
+ */
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
@@ -5,10 +10,12 @@ import heroImg from './assets/hero.png'
 import './App.css'
 
 function App() {
+  // Demo state: simple counter
   const [count, setCount] = useState(0)
 
   return (
     <>
+      {/* Hero section with logos */}
       <section id="center">
         <div className="hero">
           <img src={heroImg} className="base" width="170" height="179" alt="" />
@@ -21,6 +28,7 @@ function App() {
             Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
           </p>
         </div>
+        {/* Counter button for demo */}
         <button
           className="counter"
           onClick={() => setCount((count) => count + 1)}
@@ -31,6 +39,7 @@ function App() {
 
       <div className="ticks"></div>
 
+      {/* Documentation links section */}
       <section id="next-steps">
         <div id="docs">
           <svg className="icon" role="presentation" aria-hidden="true">

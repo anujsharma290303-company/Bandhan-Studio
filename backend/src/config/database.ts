@@ -1,8 +1,13 @@
 import { Sequelize } from 'sequelize';
 import dotenv from 'dotenv';
 
+// Load environment variables from .env file
 dotenv.config();
 
+/**
+ * Sequelize instance for PostgreSQL connection.
+ * Handles connection pooling and SSL for production.
+ */
 const sequelize = new Sequelize(process.env.DATABASE_URL as string, {
   dialect: 'postgres',
   dialectOptions: {
@@ -20,6 +25,10 @@ const sequelize = new Sequelize(process.env.DATABASE_URL as string, {
   },
 });
 
+/**
+ * Connect to the database and log status.
+ * Exits process if connection fails.
+ */
 export const connectDB = async (): Promise<void> => {
   try {
     await sequelize.authenticate();
