@@ -1,6 +1,14 @@
 /**
  * Main Express application setup for Bandan Studio API
- * Configures security, CORS, rate limiting, routes, and error handling
+ *
+ * Responsibilities:
+ * - Loads environment variables
+ * - Configures security headers, CORS, and rate limiting
+ * - Sets up request body parsing
+ * - Registers API routes (auth, health)
+ * - Handles 404s and starts the server
+ *
+ * To add new modules, import their routes and register with app.use()
  */
 import express from 'express';
 import cors from 'cors';
@@ -10,42 +18,52 @@ import rateLimit from 'express-rate-limit';
 import { connectDB } from './config/database';
 import authRoutes from './modules/auth/auth.routes';
 
-// Load environment variables from .env file
+
+// Load environment variables from .env file (must be called before using process.env)
 dotenv.config();
 
 const app = express();
 
-// Confirm app initialization
+
+// Confirm app initialization (for debugging)
 console.log('Express app initialized');
 
-// Log every request (should be first middleware)
+
+// Log every request (for debugging and monitoring)
 app.use((req, res, next) => {
   console.log('Request:', req.method, req.url);
   next();
 });
 
-// Security headers
+
+// Add security headers
 app.use(helmet());
-// Enable CORS for frontend
+
+// Enable CORS for frontend (adjust origin as needed for deployment)
 app.use(cors({
   origin: process.env.FRONTEND_URL || 'http://localhost:5173',
   credentials: true,
 }));
-// Basic rate limiting to prevent abuse
+
+// Basic rate limiting to prevent abuse (100 requests per 15 minutes per IP)
 app.use(rateLimit({ windowMs: 15 * 60 * 1000, max: 100 }));
-// Parse JSON and URL-encoded bodies
+
+// Parse JSON and URL-encoded bodies for incoming requests
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Register authentication routes
+
+// Register authentication routes (all /api/v1/auth/* endpoints)
 app.use('/api/v1/auth', authRoutes);
 
-// Health check endpoint
+
+// Health check endpoint (for uptime monitoring)
 app.get('/health', (req, res) => {
   res.json({ success: true, message: 'Bandan Studio API is running' });
 });
 
-// 404 handler for unknown routes
+
+// 404 handler for unknown routes (should be last route)
 app.use((req, res) => {
   res.status(404).json({ success: false, message: 'Route not found' });
 });
@@ -53,6 +71,7 @@ app.use((req, res) => {
 const PORT = process.env.PORT || 3000;
 
 // Start server after connecting to database
+// Call startServer() from your entry point (e.g., index.ts)
 const startServer = async () => {
   await connectDB();
   app.listen(PORT, () => {
