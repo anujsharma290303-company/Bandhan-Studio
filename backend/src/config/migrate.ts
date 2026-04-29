@@ -1,6 +1,7 @@
 import sequelize from './database';
 import User from '../models/User';
 import Client from '../models/Client';
+import Quotation from '../models/Quotation';
 
 const migrate = async () => {
   try {
@@ -10,8 +11,12 @@ const migrate = async () => {
     await User.sync({ force: false });
     console.log('✅ Users table ready');
 
+
     await Client.sync({ force: false });
     console.log('✅ Clients table ready');
+
+    await Quotation.sync({ force: false });
+    console.log('✅ Quotations table ready');
 
     console.log('✅ Migration complete');
     process.exit(0);

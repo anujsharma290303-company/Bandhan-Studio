@@ -8,9 +8,12 @@ import { AdminGuard } from './components/guards/AdminGuard'
 import { MemberGuard } from './components/guards/MemberGuard'
 import { AdminLayout } from './components/layout/AdminLayout'
 import { LoginPage } from './pages/shared/LoginPage'
+
 import { AdminDashboard } from './pages/admin/AdminDashboard'
 import { ClientsList } from './pages/admin/ClientsList'
 import { MemberDashboard } from './pages/member/MemberDashboard'
+import { QuotationsList }   from './pages/admin/QuotationsList'
+import { QuotationBuilder } from './pages/admin/QuotationBuilder'
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { retry: 1, refetchOnWindowFocus: false } },
@@ -33,9 +36,10 @@ createRoot(document.getElementById('root')!).render(
                 </AdminGuard>
               }
             >
-              <Route index            element={<AdminDashboard />} />
-              <Route path="clients"   element={<ClientsList />} />
-              {/* More routes added as we build each module */}
+              <Route index              element={<AdminDashboard />} />
+              <Route path="clients"     element={<ClientsList />} />
+              <Route path="quotations"     element={<QuotationsList />} />
+              <Route path="quotations/new" element={<QuotationBuilder />} />
             </Route>
 
             {/* Member routes */}

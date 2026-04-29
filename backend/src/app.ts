@@ -19,6 +19,7 @@ import { connectDB } from './config/database';
 
 import authRoutes from './modules/auth/auth.routes';
 import clientRoutes from './modules/clients/client.routes';
+import quotationRoutes from './modules/quotations/quotation.routes';
 
 // Load environment variables from .env file (must be called before using process.env)
 dotenv.config();
@@ -51,8 +52,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Register API routes
+
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/clients', clientRoutes);
+app.use('/api/v1/quotations', quotationRoutes);
 
 // Health check endpoint (for uptime monitoring)
 app.get('/health', (req, res) => {
